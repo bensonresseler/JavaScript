@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Value attribute</title>
+</head>
+
+<body>
+    <h1 id="heading">John</h1>
+    <input type="submit" id="btn1">
+    <button id="btn2">button</button>
+
+    <script>
+        var elH1 = document.getElementById("heading");
+        var content = elH1.textContent;
+
+        var inputName = document.getElementById("btn1");
+        var buttonName = document.getElementById("btn2");
+
+        inputName.setAttribute("value", content);
+        buttonName.textContent = content;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Begroet Onclick</title>
+
+</head>
+
+<body>
+    <form>
+        <label for="input">Naam: </label>
+        <input type="text" id="input">
+        <input type="button" onclick="begroeting();" value="Begroet">
+    </form>
+    <p id="begroeting"></p>
+
+    <script>
+        var date = new Date();
+        var uur = date.getHours();
+
+        function begroeting() {
+            var input = document.getElementById("input").value;
+            console.log(input);
+
+            if (uur < 13) {
+                var content = "Goeie morgen " + input;
+            } else {
+                var content = "Goeie namiddag " + input;
+            }
+
+            document.getElementById("begroeting").textContent = content;
+        }
+    </script>
+
+</body>
+
+</html>

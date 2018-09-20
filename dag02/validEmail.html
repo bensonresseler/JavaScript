@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ValidEmail</title>
+    <script>
+        var email = prompt("Geef een emailadres: ");
+
+        if (validEmail(email)) {
+            document.write(`"${email}" is een geldig emailadres.<br>`)
+        } else {
+            document.write(`"${email}" is geen geldig emailadres.`)
+        }
+
+        function checkAt(emailadres) {
+            if (emailadres.indexOf("@") == -1) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function checkEenAt(emailadres) {
+            if (emailadres.indexOf("@") != email.lastIndexOf("@")) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function checkTekstVoorAt(emailadres) {
+            if (emailadres.indexOf("@") == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function checkPuntNaAt(emailadres) {
+            if (emailadres.indexOf("@") > 0 &&
+                emailadres.lastIndexOf(".") > emailadres.indexOf("@")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function validEmail(emailadres) {
+            if (checkAt(emailadres) &&
+                checkEenAt(emailadres) &&
+                checkTekstVoorAt(emailadres) &&
+                checkPuntNaAt(emailadres)) {
+                return true;
+            } else {
+                return false
+            };
+        }
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>

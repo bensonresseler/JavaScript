@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>IBAN</title>
+
+    <script>
+        var ibanNR = prompt("Geef een rekeningnummer: ");
+
+        if (checkLengte(ibanNR)) {
+            document.write(`"${ibanNR}" telt 19 karakters.<br>`);
+        } else {
+            document.write(`"${ibanNR}" telt onvoldoende karakters.<br>`);
+        }
+
+        if (checkBE(ibanNR)) {
+            document.write(`"${ibanNR}" start met "BE".<br>`);
+        } else {
+            document.write(`"${ibanNR}" start niet met "BE".<br>`);
+        }
+
+        if (checkMin(ibanNR)) {
+            document.write(`"${ibanNR}" bevat de nodige "-".<br>`);
+        } else {
+            document.write(`"${ibanNR}" bevat niet de nodige "-".<br>`);
+        }
+
+        if (checkCijfers(ibanNR)) {
+            document.write(`"${ibanNR}" bevat de nodige cijfers.<br>`);
+        } else {
+            document.write(`"${ibanNR}" bevat niet de nodige cijfers.<br>`);
+        }
+
+        if (checkIbanNr(ibanNR)) {
+            document.write(`<br>"${ibanNR}" is een geldig IBAN-nr.<br>`);
+        } else {
+            document.write(`<br>"${ibanNR}" is een ongeldig IBAN-nr.<br>`);
+        }
+
+
+
+
+        function checkLengte(ibanNR) {
+            if (ibanNR.length == 19) {
+                return true
+            } else {
+                return false
+            }
+        }
+
+        function checkBE(ibanNR) {
+            var eersteLetters = ibanNR.slice(0, 2);
+            console.log(eersteLetters);
+
+            if (eersteLetters == "BE") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function checkMin(ibanNR) {
+            if ((ibanNR.charAt(4) == "-") &&
+                (ibanNR.charAt(9) == "-") &&
+                (ibanNR.charAt(14) == "-")
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function checkCijfers(ibanNR) {
+            var deel1 = (ibanNR.slice(2, 4));
+            var deel2 = (ibanNR.slice(5, 9));
+            var deel3 = (ibanNR.slice(10, 14));
+            var deel4 = (ibanNR.slice(15, ibanNR.length));
+            console.log((isNaN(deel1)), (isNaN(deel2)), (isNaN(deel3)), (isNaN(deel4)));
+
+            if ((isNaN(deel1)) || (isNaN(deel2)) ||
+                (isNaN(deel3)) || (isNaN(deel4))) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function checkIbanNr(ibanNR) {
+            if ((checkLengte(ibanNR)) &&
+                (checkBE(ibanNR)) &&
+                (checkMin(ibanNR)) &&
+                (checkCijfers(ibanNR))) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
