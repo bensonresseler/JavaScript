@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+    let getal1 = prompt ("Geef het eerste getal: ");
+    getal1 = parseInt(getal1);
+    let getal2 = prompt ("Geef het eerste getal2: ");
+    getal2 = parseInt(getal2);
+    let operator = prompt ("Geef een operator: ");
+
+    switch(operator) {
+        case "-": document.write(`${getal1} - ${getal2} = ${getal1-getal2}`);
+        break;
+        case "+": document.write(`${getal1} + ${getal2} = ${getal1+getal2}`);
+        break;
+        case "*": document.write(`${getal1} * ${getal2} = ${getal1*getal2}`);
+        break;
+        case "/": document.write(`${getal1} / ${getal2} = ${getal1/getal2}`);
+        break;
+        default: document.write("Geen geldige operator.");
+        break;
+    }
+
+
+
+    </script>
+
+</head>
+<body>
+    
+</body>
+</html>

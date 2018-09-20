@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script>
+        var list = [];
+
+        for (var i = 0; i < 3; i++) {
+            let naam = prompt("Geef een naam: ");
+            list.push(naam);
+        }
+        list.sort();
+        document.write("<ol>");
+        for (var i = 0; i < list.length; i++) {
+            document.write(`<li>${list[i]}</li>`);
+        }
+        document.write("</ol>");
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
