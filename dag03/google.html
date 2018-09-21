@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search google</title>
+    <style>
+        .hideerror {
+            display: none;
+        }
+        .showerror {
+            display: block;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="frm" action="http://www.google.be/search" method="get">
+        <div><label for="q">Search:</label>
+            <input type="text" name="q" id="q" required />
+        </div>
+        <div>
+            <label for="lr">Language</label>
+            <select name="lr" id="lr">
+                <option value="">All</option>
+                <option value="lang_fr">French</option>
+                <option value="lang_nl">Dutch</option>
+            </select>
+        </div>
+        <div>
+            <label for="cr">Country</label>
+            <select name="cr" id="cr">
+                <option value="">All</option>
+                <option value="countryFR">France</option>
+                <option value="countryBE">Belgium</option>
+                <option value="countryNL">Netherlands</option>
+            </select>
+        </div>
+        <div id="error" class="hideerror">You cannot search for french pages in the Netherlands</div>
+        <input type="submit" value="submit" />
+    </form>
+
+
+    <script>
+        var formEl = document.getElementById("frm");
+        frm.onsubmit = checkLanguagesCountry;
+
+        function checkLanguagesCountry() {
+            var language = document.getElementById("lr").value;
+            var country = document.getElementById("cr").value;
+            var error = document.getElementById("error");
+
+            if (language === "lang_fr" && country === "countryNL") {
+                error.classList.remove("hireerror");
+                error.classList.add("showerror");
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

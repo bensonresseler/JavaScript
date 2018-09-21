@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Namenlijst</title>
+    <style>
+        .hideerror {
+            display: none;
+        }
+        .showerror {
+            display: block;
+            color: red;
+        }
+    </style>
+
+    <script>
+        "use strict";
+        document.addEventListener("DOMContentLoaded", function () {
+            let button = document.getElementById("btnToevoegen");
+            button.onclick = checkRequired;
+        });
+
+        function checkRequired() {
+            let voornaam = document.getElementById("voornaam").value;
+            let achternaam = document.getElementById("achternaam").value;
+            var errorVoornaam = document.getElementById("errorVoornaam");
+            var errorAchternaam = document.getElementById("errorAchternaam");
+
+            var checkVoornaam = function () {
+                if (voornaam === null || voornaam.trim() === "") {
+                    errorVoornaam.classList.remove("hideerror");
+                    errorVoornaam.classList.add("showerror");
+                    return false;
+                } else {
+                    errorVoornaam.classList.add("hideerror");
+                    errorVoornaam.classList.remove("showerror");
+                    return true;
+                }
+            }
+
+            var checkAchternaam = function () {
+                if (achternaam === null || achternaam.trim() === "") {
+                    errorAchternaam.classList.remove("hideerror");
+                    errorAchternaam.classList.add("showerror");
+                    return false;
+                } else {
+
+                    errorAchternaam.classList.add("hideerror");
+                    errorAchternaam.classList.remove("showerror");
+                    return true;
+                }
+            }
+            var achternaamOk = checkAchternaam();
+            var voornaamOk = checkVoornaam();
+            if (voornaamOk && achternaamOk) {
+                voegElementToe();
+            }
+
+        }
+
+        function voegElementToe() {
+            let voornaam = document.getElementById("voornaam").value;
+            let achternaam = document.getElementById("achternaam").value;
+
+            let resultaatEl = document.getElementById("tablebody");
+            let trEl = document.createElement("tr");
+            let tdEl1 = document.createElement("td");
+            let tdEl2 = document.createElement("td");
+            tdEl1.textContent = voornaam;
+            tdEl2.textContent = achternaam;
+
+            resultaatEl.appendChild(trEl);
+            trEl.appendChild(tdEl1);
+            trEl.appendChild(tdEl2);
+
+            document.getElementById("voornaam").value = "";
+            document.getElementById("achternaam").value = "";
+        }
+    </script>
+
+</head>
+
+<body>
+    <form>
+        <label>Voornaam: <input type="text" name="voornaam" id="voornaam" class="required"></label><span id="errorVoornaam" class="hideerror">Voornaam moet worden ingevuld.</span>
+        <label>Achternaam: <input type="text" name="achternaam" id="achternaam" class="required"></label><span id="errorAchternaam" class="hideerror">Voornaam moet worden ingevuld.</span>
+        <button id="btnToevoegen" type="button">Voeg toe</button>
+    </form>
+    <table>
+        <thead>
+            <th>Voornaam</th>
+            <th>Achternaam</th>
+        </thead>
+        <tbody id="tablebody"></tbody>
+    </table>
+</body>
+
+</html>

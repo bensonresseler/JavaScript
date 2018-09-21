@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Namenlijst</title>
+
+    <script>
+        "use strict";
+        document.addEventListener("DOMContentLoaded", function () {
+            let button = document.getElementById("btn");
+            button.onclick = voegElementToe;
+        });
+
+        function voegElementToe() {
+            let voornaam = document.getElementById("voornaam").value;
+            let achternaam = document.getElementById("achternaam").value;
+
+            let resultaatEl = document.getElementById("resultaat");
+            let liEl = document.createElement("li");
+            liEl.textContent = `${voornaam} ${achternaam}`;
+
+            let olEl = document.getElementById("resultaat");
+            let beforeElement = null;
+            for (let i = 0; i < olEl.children.length; i++) {
+                let currentElement = olEl.children.item(i); if (currentElement.textContent > liEl.textContent) {
+                    beforeElement = currentElement;
+                    break;
+                }
+            }
+            olEl.insertBefore(liEl, beforeElement);
+
+        }
+    </script>
+
+</head>
+
+<body>
+    <label for="voornaam">Voornaam: </label>
+    <input type="text" id="voornaam" name="voornaam">
+    <label for="achternaam">Achternaam: </label>
+    <input type="text" id="achternaam" name="achternaam">
+    <button id="btn">Toevoegen</button>
+    <ol id="resultaat"></ol>
+</body>
+
+</html>
