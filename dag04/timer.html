@@ -1,0 +1,27 @@
+<body>
+    <div id="timer"></div>
+    <button id="btn">Klik mij binnen 5 seconden</button>
+    <script>
+        'use strict';
+        let buttonEl = document.getElementById("btn");
+        let teller = 4;
+        let handler = setInterval(teLaat, 1000);
+        buttonEl.addEventListener("click", function () {
+            clearInterval(handler);
+            alert("Op tijd");
+            buttonEl.textContent = 'Op tijd';
+            buttonEl.disabled = true;
+        });
+        function teLaat() {
+            if (teller > 0) {
+                buttonEl.textContent = `Klik mij binnen ${teller} seconden`;
+                teller--;
+            } else {
+                alert("Te laat. Er gebeuren nu gruwelijke dingen met jou.");
+                buttonEl.disabled = true;
+                buttonEl.textContent = 'Te laat';
+                clearInterval(handler);
+            }
+        }
+    </script>
+</body>

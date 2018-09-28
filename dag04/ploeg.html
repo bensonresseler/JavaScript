@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ploeg</title>
+    <script>
+        function Persoon(vnaam, anaam) {
+            this.voornaam = vnaam;
+            this.achternaam = anaam;
+        }
+        Persoon.prototype.toString = function () {
+            return this.voornaam + " " + this.achternaam;
+        }
+        let ploeg = [];
+        ploeg.push(new Persoon("Karen", "Damen"));
+        ploeg.push(new Persoon("Kristel", "Verbeke"));
+        ploeg.push(new Persoon("Kathleen", "Aerts"));
+        function toonPloeg() {
+            let ulEl = document.getElementById("ploeg");
+            ulEl.innerHTML = "";
+            for (let i = 0; i < ploeg.length; i++) {
+                let p = ploeg[i];
+                let liEl = document.createElement("li");
+                liEl.textContent = p.toString();
+                let buttonEl = document.createElement("button");
+                buttonEl.textContent = "Verwijderen";
+                buttonEl.setAttribute("onclick", `verwijder(${i})`);
+                let wijzigButtonEl = document.createElement("button");
+                wijzigButtonEl.textContent = "Wijzigen";
+                wijzigButtonEl.setAttribute("onclick", `wijzig(${i})`);
+                liEl.appendChild(buttonEl);
+                liEl.appendChild(wijzigButtonEl);
+                ulEl.appendChild(liEl);
+            }
+        }
+        function verwijder(index) {
+            ploeg.splice(index, 1);
+            toonPloeg();
+        }
+        function wijzig(index) {
+            let ulEl = document.getElementById("ploeg");
+            let p = ploeg[index];
+            let voornaamEl = document.createElement("input");
+            voornaamEl.id = "nieuwevoornaam";
+            voornaamEl.value = p.voornaam;
+            let achternaamEl = document.createElement("input");
+            achternaamEl.id = "nieuweachternaam";
+            achternaamEl.value = p.achternaam;
+            let buttonEl = document.createElement("button");
+            buttonEl.textContent = "wijzigen";
+            buttonEl.setAttribute("onclick", `bewaarWijziging(${index})`);
+            let div = document.createElement("div");
+            div.appendChild(voornaamEl);
+            div.appendChild(achternaamEl);
+            div.appendChild(buttonEl);
+            document.body.appendChild(div);
+
+        }
+        function bewaarWijziging(index) {
+            let p = ploeg[index];
+            let voornaamEl = document.getElementById("nieuwevoornaam");
+            let achternaamEl = document.getElementById("nieuweachternaam");
+            p.voornaam = voornaamEl.value;
+            p.achternaam = achternaamEl.value;
+            document.body.removeChild(document.body.lastElementChild);
+            toonPloeg();
+        }
+        function voegToe() {
+            let voornaamEl = document.getElementById("voornaam");
+            let achternaamEl = document.getElementById("achternaam");
+            let p = new Persoon(voornaamEl.value, achternaamEl.value);
+            ploeg.push(p);
+            toonPloeg();
+        }
+        document.addEventListener("DOMContentLoaded", toonPloeg);
+    </script>
+</head>
+
+<body>
+    <label for="voornaam">Voornaam<input type="text" id="voornaam"></label>
+    <label for="achternaam">Achternaam<input type="text" id="achternaam"></label>
+    <button onclick="voegToe();">Toevoegen</button>
+    <ul id="ploeg"></ul>
+</body>
+
+</html>

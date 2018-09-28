@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Konijntjes doodkloppen</title>
+    <style>
+        /* De container */
+        #id {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            border: 1px solid black;
+        }
+
+        /* de tekening van het lieve konijntje */
+        #image {
+            position: absolute;
+            width: 50px;
+            /* het moet geen Vlaamse reus worden */
+        }
+
+        /* klasse om het konijntje te verbergen */
+        .hidden {
+            display: none;
+        }
+
+        /* klasse om het konijntje te tonen */
+        .visible {
+            display: block;
+        }
+
+        @-webkit-keyframes rotate {
+            50% {
+                transform: translateY(-40px);
+            }
+
+            100% {
+                transform: translateY(50px);
+                transform: rotate(90deg);
+            }
+        }
+
+        .animation-rotate {
+            animation-name: rotate;
+            animation-duration: 1s;
+            transition-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="id">
+        <img id="image" class="hidden" src="rabbit.png" alt="rabbit">
+    </div>
+    <p id="resultaat"></p>
+    <script>
+        let imageEl = document.getElementById("image");
+        let resultaatEl = document.getElementById("resultaat");
+        let wachttijd = getRandomIntInclusive(500, 5000);
+        let handle;
+        setTimeout(start, wachttijd);
+        function start() {
+            toonKonijn();
+            let toontijd = getRandomIntInclusive(500, 1500);
+            handle = setTimeout(stop, toontijd);
+            imageEl.addEventListener("click", setGewonnen);
+        }
+
+        // 
+        // zie: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#Getting_a_random_integer_between_two_values
+        //
+        function getRandomIntInclusive(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            //The maximum is inclusive and the minimum is inclusive 
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function toonKonijn() {
+            let X = getRandomIntInclusive(0, 350);
+            let Y = getRandomIntInclusive(0, 350);
+            imageEl.style.cssText = `top:${X}px;left:${Y}px`;
+            imageEl.className = "visible";
+        }
+
+        function verbergKonijn() {
+            imageEl.className = "hidden";
+        }
+
+        function setGewonnen() {
+            clearTimeout(handle);
+            imageEl.removeEventListener("click", setGewonnen);
+            imageEl.className = "animation-rotate";
+            resultaatEl.textContent = "Konijn is dood";
+        }
+
+        function stop() {
+            verbergKonijn();
+            imageEl.removeEventListener("click", setGewonnen);
+            resultaat.textContent = "Konijn is ontsnapt";
+        }
+
+    </script>
+
+</body>
+
+</html>
