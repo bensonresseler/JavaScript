@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Storage</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!localStorage) {
+                var div = document.getElementById("resultaat");
+                div.textContent = "Uw browser ondersteunt geen localStorage"
+            } else {
+                toonData();
+                let btn = document.getElementById("btn");
+                btn.onclick = klik;
+            }
+            let clear = document.getElementById("clear");
+            clear.onclick = function () {
+                localStorage.clear();
+                toonData();
+            };
+        });
+        function toonData() {
+            let resultaat = document.getElementById("resultaat");
+            resultaat.textContent = "";
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                let value = localStorage.getItem(key);
+                resultaat.innerHTML += key + "= " + value + "<br>";
+            }
+        }
+        function klik() {
+            let sleutel = document.getElementById("sleutel").value;
+            let waarde = document.getElementById("waarde").value;
+            localStorage.setItem(sleutel, waarde);
+            toonData();
+        }
+
+    </script>
+</head>
+
+<body>
+    <div id="resultaat"></div>
+    <label>Sleutel: <input type="text" id="sleutel"></label>
+    <label>Waarde: <input type="text" id="waarde"></label>
+    <button id="btn">klik</button>
+    <button id="clear">Clear LocalStorage</button>
+</body>
+
+</html>

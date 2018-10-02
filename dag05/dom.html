@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Winkel</title>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        class Product {
+            constructor(naam, prijs) {
+                this.naam = naam;
+                this.prijs = prijs;
+            }
+            toString() {
+                return this.naam + "(" + this.prijs + "€)";
+            }
+        }
+        let producten = [new Product("potlood", 5),
+        new Product("meetlat", 10),
+        new Product("gom", 7)];
+        $(function () {
+            let $producten = $('#producten');
+            for (let i = 0; i < producten.length; i++) {
+                $option = $('<option>');
+                $option.val(producten[i].naam);
+                $option.text(producten[i]);
+                $producten.append($option);
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <select id="producten"></select>
+</body>
+
+</html>

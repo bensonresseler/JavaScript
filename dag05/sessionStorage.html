@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Storage</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!sessionStorage) {
+                var div = document.getElementById("resultaat");
+                div.textContent = "Uw browser ondersteunt geen sessionStorage"
+            } else {
+                toonData();
+                let btn = document.getElementById("btn");
+                btn.onclick = klik;
+            }
+        });
+        function toonData() {
+            let resultaat = document.getElementById("resultaat");
+            resultaat.textContent = "";
+            for (let i = 0; i < sessionStorage.length; i++) {
+                let key = sessionStorage.key(i);
+                let value = sessionStorage.getItem(key);
+                resultaat.innerHTML += key + "= " + value + "<br>";
+            }
+        }
+        function klik() {
+            let sleutel = document.getElementById("sleutel").value;
+            let waarde = document.getElementById("waarde").value;
+            sessionStorage.setItem(sleutel, waarde);
+            toonData();
+        }
+    </script>
+</head>
+
+<body>
+    <div id="resultaat"></div>
+    <label>Sleutel: <input type="text" id="sleutel"></label>
+    <label>Waarde: <input type="text" id="waarde"></label>
+    <button id="btn">klik</button>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Winkel</title>
+    <style>
+        #error{
+            color:red;
+            display:none;
+        }
+    </style>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        class Product {
+            constructor(naam, prijs) {
+                this.naam = naam;
+                this.prijs = prijs;
+            }
+            toString() {
+                return this.naam + "(" + this.prijs + "€)";
+            }
+        }
+        let producten = [new Product("potlood", 5),
+        new Product("meetlat", 10),
+        new Product("gom", 7)];
+        $(function () {
+            let $producten = $('#producten');
+            let $tablebody = $('#tablebody');
+            let $error = $('#error');
+            for (let i = 0; i < producten.length; i++) {
+                $option = $('<option>');
+                $option.val(producten[i].naam);
+                $option.text(producten[i]);
+                $producten.append($option);
+            }
+            $("#aantal").blur(function () {
+                if (this.value === "" || this.value < 0) {
+                    $("#error").show();
+                } else {
+                    $("#error").hide();
+                }
+            });
+            $("#btn").click(function (event) {
+                if ($("#aantal").val() === "" || $("#aantal").val() < 0) {
+                    $("#error").show();
+                } else {
+                    $("#error").hide();
+                    let $product = $("#producten").val();
+                    let $aantal = $("#aantal").val();
+                    // let productnaam = $producten.val();
+                    // let product = producten.find(p => p.naam == productnaam);
+                    for (let i = 0; i < producten.length; i++) {
+                        if (producten[i].naam === $product) var index = i;
+                    }
+                    let $prijs = producten[index].prijs;
+                    let $totaal = $aantal * $prijs;
+                    $tr = $("<tr>");
+
+                    $tdProduct = $("<td>").text($product);
+                    $tdPrijs = $("<td>").text($prijs);
+                    $tdAantal = $("<td>").text($aantal);
+                    $tdTotaal = $("<td>").text($totaal);
+
+                    $tablebody.append($tr);
+                    $tr.append($tdProduct);
+                    $tr.append($tdAantal);
+                    $tr.append($tdPrijs);
+                    $tr.append($tdTotaal);
+                }
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <select id="producten"></select>
+    <input type="number" id="aantal" value="0"><button id="btn">Bestellen</button>
+    <div id="error">U moet een positief aantal invullen</div>
+    <table>
+        <thead>
+            <tr>
+                <th>product</th>
+                <th>E.P.</th>
+                <th>aantal</th>
+                <th>subtotaal</th>
+            </tr>
+        </thead>
+        <tbody id="tablebody"></tbody>
+    </table>
+</body>
+
+</html>
