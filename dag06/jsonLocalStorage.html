@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bestelling</title>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        class Product {
+            constructor(id, naam, prijs) {
+                this.id = id;
+                this.naam = naam;
+                this.prijs = prijs;
+            }
+            toString() {
+                return this.naam + "(" + this.prijs + " €)";
+            }
+        }
+        class Bestellijn {
+            constructor(product, aantal) {
+                this.product = product;
+                this.aantal = aantal;
+            }
+            get eenheidsprijs() {
+                return this.product.prijs;
+            }
+            get subtotaal() {
+                return this.product.prijs * this.aantal;
+            }
+            get naam() {
+                return this.product.naam;
+            }
+        }
+        let producten = [
+            new Product(1, "potlood", 2),
+            new Product(2, "gom", 5),
+            new Product(3, "lat", 10)
+        ]
+        $(function () {
+            let lijnen = localStorage.getItem("bestellijnen");
+            if (lijnen != null) bestellijnen = parseBestellijnen(lijnen);
+            toonBestellijnen();
+            $select = $('#producten');
+            producten.forEach(p => {
+                $option = $('<option>').val(p.id).text(p);
+                $select.append($option);
+            })
+            $('#btnToevoegen').click(function () {
+                let productid = $select.val();
+                let aantal = $('#aantal').val();
+                $('#aantal').val("0");
+                let product = producten.find(p => p.id == productid);
+                let bestellijn = new Bestellijn(product, aantal);
+                bestellijnen.push(bestellijn);
+                toonBestellijnen();
+                localStorage.setItem("bestellijnen", JSON.stringify(bestellijnen));
+            });
+            $('#btnClear').click(function () {
+                localStorage.clear();
+                bestellijnen = [];
+                toonBestellijnen();
+            });
+        });
+        let bestellijnen = [];
+        function toonBestellijnen() {
+            let $bestellijnen = $('#bestellijnen');
+            if (bestellijnen.length == 0) {
+                $bestellijnen.hide();
+                return;
+            }
+            $bestellijnen.show();
+            let $bestelbody = $('#bestelbody');
+            $bestelbody.html('');
+            for (let i = 0; i < bestellijnen.length; i++) {
+                $tdnaam = $('<td>').text(bestellijnen[i].naam);
+                $tdEP = $('<td>').text(bestellijnen[i].eenheidsprijs);
+                $tdaantal = $('<td>').text(bestellijnen[i].aantal);
+                $tdsubtotaal = $('<td>').text(bestellijnen[i].subtotaal);
+                $tr = $('<tr>');
+                $tr.append($tdnaam).append($tdEP).append($tdaantal).append($tdsubtotaal);
+                $bestelbody.append($tr);
+            }
+        }
+        /*
+         * Zet een JSON string om naar een array met producten
+         * Het probleem is dat er bij standaardparsing geen 
+         * echte Product objecten worden gemaakt zoals we die 
+         * gedefinieerd hebben als Class (met properties naam, id, 
+         * EP en subtotaal)
+         */
+        function parseBestellijnen(jsonString) {
+            let lijst = JSON.parse(jsonString);
+            let bestellijnen = [];
+            for (let i = 0; i < lijst.length; i++) {
+                let id = lijst[i].product.id;
+                let naam = lijst[i].product.naam;
+                let prijs = lijst[i].product.prijs;
+                let aantal = lijst[i].aantal;
+                let product = new Product(id, naam, prijs);
+                bestellijnen.push(new Bestellijn(product, aantal));
+            }
+            return bestellijnen;
+        }
+    </script>
+</head>
+
+<body>
+    <select name="producten" id="producten">
+    </select><label>Aantal: <input type="number" value="0" id="aantal"></label>
+    <button id="btnToevoegen">Toevoegen</button>
+    <button id="btnClear">Leegmaken</button>
+    <table id="bestellijnen">
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>E.P.</th>
+                <th>Aantal</th>
+                <th>Subtotaal</th>
+            </tr>
+        </thead>
+        <tbody id="bestelbody"></tbody>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <label style="display:block">Voornaam<input type="text" id="voornaam"></label>
+    <label style="display:block">Achternaam<input type="text" id="achternaam"></label>
+    <button onclick="bewaar()">Bewaar</button>
+    <script>
+        class Persoon {
+            constructor(voornaam, achternaam) {
+                this.voornaam = voornaam;
+                this.achternaam = achternaam;
+            }
+        }
+        let persoonString = localStorage.getItem("persoon");
+        if (persoonString !== null) {
+            let persoon = JSON.parse(persoonString);
+            document.getElementById("voornaam").value = persoon.voornaam;
+            document.getElementById("achternaam").value = persoon.achternaam;
+        }
+        function bewaar() {
+            let voornaam = document.getElementById("voornaam").value;
+            let achternaam = document.getElementById("achternaam").value;
+            let persoon = new Persoon(voornaam, achternaam);
+            let persoonString = JSON.stringify(persoon);
+            localStorage.setItem("persoon", persoonString);
+        }
+    </script>
+</body>
+
+</html>

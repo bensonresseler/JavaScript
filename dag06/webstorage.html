@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bestelling</title>
+    <script src="jquery-3.3.1.js"></script>
+    <script>
+        class Product {
+            constructor(id, naam, prijs) {
+                this.id = id;
+                this.naam = naam;
+                this.prijs = prijs;
+            }
+            toString() {
+                return this.naam + "(" + this.prijs + " €)";
+            }
+        }
+        class Bestellijn {
+            constructor(product, aantal) {
+                this.product = product;
+                this.aantal = aantal;
+            }
+            get eenheidsprijs() {
+                return this.product.prijs;
+            }
+            get subtotaal() {
+                return this.product.prijs * this.aantal;
+            }
+            get naam() {
+                return this.product.naam;
+            }
+        }
+        let producten = [
+            new Product(1, "potlood", 2),
+            new Product(2, "gom", 5),
+            new Product(3, "lat", 10)
+        ]
+
+
+        let bestellijnen = [];
+        function toonBestellijnen() {
+            let $bestelbody = $("#bestelbody");
+            let $bestellijnen = $('#bestellijnen');
+            $bestelbody.html("");
+            if (bestellijnen.length == 0) {
+                $bestellijnen.hide();
+                return;
+            } else {
+                $bestellijnen.show();
+                bestellijnen.forEach(b => {
+                    $trEL = $("<tr>")
+                    $tdNaam = $("<td>").text(b.naam);
+                    $tdEP = $("<td>").text(b.eenheidsprijs);
+                    $tdAantal = $("<td>").text(b.aantal);
+                    $tdSubtotaal = $("<td>").text(b.subtotaal);
+                    $trEL.append($tdNaam);
+                    $trEL.append($tdEP);
+                    $trEL.append($tdAantal);
+                    $trEL.append($tdSubtotaal);
+
+                    $bestelbody.append($trEL);
+                })
+            }
+        }
+
+        $(function () {
+            toonBestellijnen()
+            let $select = $('#producten');
+            producten.forEach(p => {
+                $option = $('<option>').val(p.id).text(p);
+                $select.append($option);
+            });
+
+            let $btn = $("#btn");
+            $btn.click(function () {
+                let $productID = $("#producten").val();
+                let $product = producten[$productID - 1];
+                let $aantal = parseInt($("#aantal").val());
+                bestellijnen.push(new Bestellijn($product, $aantal))
+                toonBestellijnen();
+            });
+
+        });
+
+    </script>
+</head>
+
+<body>
+    <select name="producten" id="producten">
+    </select>
+    <label>Aantal:<input type="text" name="aantal" id="aantal"></label>
+    <button id="btn">Voeg toe</button>
+    <table id="bestellijnen">
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>E.P.</th>
+                <th>Aantal</th>
+                <th>Subtotaal</th>
+            </tr>
+        </thead>
+        <tbody id="bestelbody"></tbody>
+    </table>
+</body>
+
+</html>
